@@ -1,0 +1,82 @@
+<div>
+	<input class="drink_id" type="hidden" name="drink_id" value="{{ drink_id }}" />
+	<table>
+		<tr>
+			<th>Average:</th>
+			<td class="a-1">
+				{% if ave_score > 0.5 %}
+					<img src="/static/star.png" />
+				{% else %}
+					<img src="/static/star-inact.png" />
+				{% endif %}
+			</td>
+			<td class="a-2">
+				{% if ave_score > 1.5 %}
+					<img src="/static/star.png" />
+				{% else %}
+					<img src="/static/star-inact.png" />
+				{% endif %}
+			</td>
+			<td class="a-3">
+				{% if ave_score > 2.5 %}
+					<img src="/static/star.png" />
+				{% else %}
+					<img src="/static/star-inact.png" />
+				{% endif %}
+			</td>
+			<td class="a-4">
+				{% if ave_score > 3.5 %}
+					<img src="/static/star.png" />
+				{% else %}
+					<img src="/static/star-inact.png" />
+				{% endif %}
+			</td>
+			<td class="a-5">
+				{% if ave_score > 4.5 %}
+					<img src="/static/star.png" />
+				{% else %}
+					<img src="/static/star-inact.png" />
+				{% endif %}
+			</td>
+		</tr>
+		<tr>
+			<th>Mine:</th>
+			
+			<td class="m-1 my_score">
+				{% if my_score > 0.5 %}
+					<img src="/static/star.png" />
+				{% else %}
+					<img src="/static/star-inact.png" />
+				{% endif %}
+			</td>
+			<td class="m-2 my_score">
+				{% if my_score > 1.5 %}
+					<img src="/static/star.png" />
+				{% else %}
+					<img src="/static/star-inact.png" />
+				{% endif %}
+			</td>
+			<td class="m-3 my_score">
+				{% if my_score > 2.5 %}
+					<img src="/static/star.png" />
+				{% else %}
+					<img src="/static/star-inact.png" />
+				{% endif %}
+			</td>
+			<td class="m-4 my_score">
+				{% if my_score > 3.5 %}
+					<img src="/static/star.png" />
+				{% else %}
+					<img src="/static/star-inact.png" />
+				{% endif %}
+			</td>
+			<td class="m-5 my_score">
+				{% if my_score > 4.5 %}
+					<img src="/static/star.png" />
+				{% else %}
+					<img src="/static/star-inact.png" />
+				{% endif %}
+			</td>
+		</tr>
+	</table>
+</div>

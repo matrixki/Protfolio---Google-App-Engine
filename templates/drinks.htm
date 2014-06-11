@@ -1,0 +1,145 @@
+{% extends "_base.htm" %}
+{% block bodycontent %}
+      <h1>Drinks</h1>
+      {% if msg %}
+      	<p>{{ msg }}</p>
+      {% endif %}
+		{% if drinks %}
+      <table>
+          <tr>
+          	<th>Rating</th>
+            <th>
+            	{% ifequal sort 'title' %}
+            		{% ifequal order 'asc' %}
+            			<a href="/drinks?sort=title&order=desc">Title</a>
+            			<img src="/static/sortascending.gif"></img>
+            		{% else %}
+            			<a href="/drinks?sort=title&order=asc">Title</a>
+            			<img src="/static/sortdescending.gif"></img>
+            		{% endifequal %}
+            	{% else %}
+            		<a href="/drinks?sort=title&order=asc">Title</a>
+            	{% endifequal %}
+            </th>
+            <th>
+            	{% ifequal sort 'color' %}
+            		{% ifequal order 'asc' %}
+            			<a href="/drinks?sort=color&order=desc">Color</a>
+            			<img src="/static/sortascending.gif"></img>
+            		{% else %}
+            			<a href="/drinks?sort=color&order=asc">Color</a>
+            			<img src="/static/sortdescending.gif"></img>
+            		{% endifequal %}
+            	{% else %}
+            		<a href="/drinks?sort=color&order=asc">Color</a>
+            	{% endifequal %}
+            </th>
+            <th>
+            	{% ifequal sort 'publisher' %}
+            		{% ifequal order 'asc' %}
+            			<a href="/drinks?sort=publisher&order=desc">Publisher</a>
+            			<img src="/static/sortascending.gif"></img>
+            		{% else %}
+            			<a href="/drinks?sort=publisher&order=asc">Publisher</a>
+            			<img src="/static/sortdescending.gif"></img>
+            		{% endifequal %}
+            	{% else %}
+            		<a href="/drinks?sort=publisher&order=asc">Publisher</a>
+            	{% endifequal %}
+            </th>
+            <th>
+            	{% ifequal sort 'price' %}
+            		{% ifequal order 'asc' %}
+            			<a href="/drinks?sort=price&order=desc">Price</a>
+            			<img src="/static/sortascending.gif"></img>
+            		{% else %}
+            			<a href="/drinks?sort=price&order=asc">Price</a>
+            			<img src="/static/sortdescending.gif"></img>
+            		{% endifequal %}
+            	{% else %}
+            		<a href="/drinks?sort=price&order=asc">Price</a>
+            	{% endifequal %}
+            </th>
+            <th>
+            	{% ifequal sort 'caffine' %}
+            		{% ifequal order 'asc' %}
+            			<a href="/drinks?sort=caffine&order=desc">Caffine</a>
+            			<img src="/static/sortascending.gif"></img>
+            		{% else %}
+            			<a href="/drinks?sort=caffine&order=asc">Caffine</a>
+            			<img src="/static/sortdescending.gif"></img>
+            		{% endifequal %}
+            	{% else %}
+            		<a href="/drinks?sort=caffine&order=asc">Caffine</a>
+            	{% endifequal %}
+            </th>
+          </tr>
+          {% for drink in drinks %}
+				 <tr>
+					<td id="r-{{ drink.key.id }}" class="drink_rating">
+						<div>
+							<input class="drink_id" type="hidden" name="drink_id" value="{{ drink.key.id }}" />
+						</div>
+					</td>
+					<td>{{ drink.title }}</td>
+					<td>{{ drink.color }}</td>
+					<td>{{ drink.publisher }}</td>
+					<td>{{ drink.price }}</td>
+					<td>{{ drink.caffine }}</td>
+				 </tr>
+          {% endfor %}
+      </table>
+      {% endif %}
+      <p><a href="/add-drink">Add a drink</a></p>
+      <script type="text/javascript">
+      	submitRating = function(eventObject, score) {
+				var rating_cell = $(eventObject.target).closest('.drink_rating');
+				var drink_id = $(rating_cell).find('.drink_id').val();
+				$.ajax({
+					url: '/ratings',
+					data: 'score=' + score + '&drink_id=' + drink_id,
+					type: 'POST',
+					success: function(datax) {
+						$(rating_cell).html(datax);
+						activateMyStars(drink_id);
+					}
+				});
+      	};
+      	activateMyStars = function(drink_id) {
+      		  							
+				$('#r-' + drink_id + ' .m-5').click(function(eventObject){
+					submitRating(eventObject, 5);
+				});
+				$('#r-' + drink_id + ' .m-4').click(function(eventObject) {
+					submitRating(eventObject, 4);
+				});
+				$('#r-' + drink_id + ' .m-3').click(function(eventObject) {
+					submitRating(eventObject, 3);
+				});
+				$('#r-' + drink_id + ' .m-2').click(function(eventObject) {
+					submitRating(eventObject, 2);
+				});
+				$('#r-' + drink_id + ' .m-1').click(function(eventObject) {
+					submitRating(eventObject, 1);
+				});
+      	}
+      	$(document).ready(function(){
+      		$('.drink_rating').each(function(){
+      			var drink_id = $(this).find('.drink_id').val();
+      			$.ajax({
+  						url: "/ratings",
+  						data: "drink_id=" + drink_id,
+  						cache: false,
+  						success: function(stuff){
+  							$('#r-' + drink_id).html(stuff);
+  							activateMyStars(drink_id);
+    					}
+ 					});
+      		});
+      	});
+      </script>
+{% endblock %}
+
+
+
+

@@ -1,0 +1,36 @@
+{% extends "_base.htm" %}
+{% block title %}
+   Chat
+{% endblock %}
+{% block bodycontent %}
+      <h1>Chat on Mike's Portfolio</h1>
+      <form method="post" action="/chat">
+      <p>
+      <input type="text" name="message" size="60"/>
+      <input type="submit" value="Chat"/> 
+      </p>
+      </form>
+      {% ifnotequal error None %}
+       <p>
+       {{ error }}
+       </p>
+      {% endifnotequal %}
+      <div id="chatcontent">
+          Loading...
+          <!-- <img src="/static/spinning.gif" alt="Loading..."/> -->
+      </div>
+<script type="text/javascript"> /* <![CDATA[ */
+function updateMsg() { 
+$.ajax({
+  url: "/messages",
+  cache: false,
+  success: function(frag){
+    $("#chatcontent").html(frag);
+    setTimeout('updateMsg()', 3000);
+  }
+ }); 
+}
+updateMsg();
+/* ]]> */
+</script>
+{% endblock %}
